@@ -1,82 +1,51 @@
 use std::io;
 
 fn main() {
-    // объявление констант
-    // const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
+    println!("Введите темтературу для конвертации Фаренгейт к Цельсию");
 
-    // обозначение переменной
-    // let mut x = 5;
-    // println!("The value of x is: {}", x);
-    // x = 6;
-    // println!("The value of x is: {}", x);
-
-    // затеняемость
-    // let x = 5;
-    //
-    // let x = x + 1;
-    //
-    // {
-    //     let x = x * 2;
-    //     println!("The value of x in the inner scope is: {x}");
-    // }
-    //
-    // println!("The value of x is: {x}");
-
-    // числовые операции
-    // addition
-    // let sum = 5 + 10;
-    // println!("{}",sum);
-    //
-    // // subtraction
-    // let difference = 95.5 - 4.3;
-    // println!("{}",difference);
-    //
-    // // multiplication
-    // let product = 4 * 30;
-    // println!("{}",product);
-    //
-    // // division
-    // let quotient = 56.7 / 32.2;
-    // let truncated = -5 / 3; // Results in -1
-    // println!("{}",quotient);
-    // println!("{}",truncated);
-    //
-    // // remainder остаток
-    // let remainder = 43 % 5;
-    // println!("{}",remainder);
-
-    // символы
-    // let c = 'z';
-    // let z: char = 'ℤ'; // with explicit type annotation
-    // let heart_eyed_cat = '😻';
-    // println!("{}\n{}\n{}", c, z, heart_eyed_cat);
-
-    // кортежи
-    // let k = (19, 45.44, 'c');
-    // let emp = ();
-    // println!("{:?}",k);
-    // println!("{:?}",emp);
-    // println!("{}",k.2);
-    // //ошибка println!("{}",emp.0);
-
-    //массивы
-    // код, вызывает панику при вводе числа больше или равно 5, так как длинна массива всего 5
-    let a = [1, 2, 3, 4, 5];
-
-    println!("Please enter an array index.");
-
-    let mut index = String::new();
+    let mut str = String::new();
 
     io::stdin()
-        .read_line(&mut index)
+        .read_line(&mut str)
         .expect("Failed to read line");
 
-    let index: usize = index
+    let x: i32 = str
         .trim()
         .parse()
         .expect("Index entered was not a number");
 
-    let element = a[index];
+    println!("В Целсиях это - {}", far_to_cel(x));
 
-    println!("The value of the element at index {} is: {}", index, element);
+    println!("Введите номер числа Фибоначе, которое нужно сгенерировать");
+
+    let mut str = String::new();
+
+    io::stdin()
+        .read_line(&mut str)
+        .expect("Failed to read line");
+
+    let n: i32 = str
+        .trim()
+        .parse()
+        .expect("Index entered was not a number");
+
+    println!("{}-ое число Фибоначи - {}", n , fib(n));
+}
+
+fn far_to_cel(x: i32) -> i32{
+    (x - 32)*5/9
+}
+
+fn fib (x: i32) -> i32{
+    if x == 1 {
+         1
+    } else if x == 2 {
+         1
+    } else if x == 3 {
+         2
+    } else {
+        let a =fib(x - 1);
+        let b = fib(x - 2);
+        a+b
+    }
 }
