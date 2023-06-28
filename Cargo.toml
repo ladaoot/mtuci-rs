@@ -1,0 +1,8 @@
+[workspace]
+members=[
+    "ch3",
+    "chapter1",
+    "guessing_game",
+    "fizz_buzz",
+    "rustlings"
+]

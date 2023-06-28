@@ -1,0 +1,24 @@
+[package]
+name = "ch3"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "loops"
+path = "src/loops.rs"
+
+[[bin]]
+name = "functions"
+path = "src/functions.rs"
+
+[[bin]]
+name = "branches"
+path = "src/branches.rs"
+
+[[bin]]
+name = "variables"
+path = "src/variables.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
