@@ -30,7 +30,7 @@ fn find_term(search_term: &str, quote: &str) -> String {
 
             answer.push_str(v[i]);
 
-            break;
+            return answer;
         }
     }
     answer
