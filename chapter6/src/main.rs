@@ -41,18 +41,18 @@ fn main() {
     // let six = plus_one(five);
     // let none = plus_one(None);
 
-    let mut count = 0;
-    match coin {
-        Coin::Quarter(state) => println!("State quarter from {:?}!", state),
-        _ => count += 1,
-    }
-
-    // констркция с if let, которая делает тоже что и конструкция с match
-    if let Coin::Quarter(state) = coin {
-        println!("State quarter from {:?}!", state);
-    } else {
-        count += 1;
-    }
+    // let mut count = 0;
+    // match coin {
+    //     Coin::Quarter(state) => println!("State quarter from {:?}!", state),
+    //     _ => count += 1,
+    // }
+    //
+    // // констркция с if let, которая делает тоже что и конструкция с match
+    // if let Coin::Quarter(state) = coin {
+    //     println!("State quarter from {:?}!", state);
+    // } else {
+    //     count += 1;
+    // }
 }
 
 // enum IpAddrKind {
