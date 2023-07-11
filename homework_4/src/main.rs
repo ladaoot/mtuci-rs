@@ -1,5 +1,4 @@
 use std::alloc::{self, Layout};
-use std::marker::PhantomData;
 use std::mem;
 use std::ptr::{self, NonNull};
 
@@ -7,24 +6,15 @@ use std::ptr::{self, NonNull};
 struct RawVec<T> {
     ptr: NonNull<T>,
     cap: usize,
-    _marker: PhantomData<T>,
 }
-
-unsafe impl<T: Send> Send for RawVec<T> {}
-
-unsafe impl<T: Sync> Sync for RawVec<T> {}
-
 
 impl<T> RawVec<T> {
     fn new() -> Self {
-        // !0 is usize::MAX. This branch should be stripped at compile time.
         let cap = if mem::size_of::<T>() == 0 { !0 } else { 0 };
 
-        // `NonNull::dangling()` doubles as "unallocated" and "zero-sized allocation"
         RawVec {
             ptr: NonNull::dangling(),
             cap: cap,
-            _marker: PhantomData,
         }
     }
 
@@ -38,26 +28,19 @@ impl<T> RawVec<T> {
     }
 
     fn grow(&mut self) {
-        // since we set the capacity to usize::MAX when T has size 0,
-        // getting to here necessarily means the Vec is overfull.
         assert!(mem::size_of::<T>() != 0, "capacity overflow");
 
         let (new_cap, new_layout) = if self.cap == 0 {
             (1, Layout::array::<T>(1).unwrap())
         } else {
-            // This can't overflow because we ensure self.cap <= isize::MAX.
             let new_cap = 1 + self.cap;
 
-            // `Layout::array` checks that the number of bytes is <= usize::MAX,
-            // but this is redundant since old_layout.size() <= isize::MAX,
-            // so the `unwrap` should never fail.
             let new_layout = Layout::array::<T>(new_cap).unwrap();
             (new_cap, new_layout)
         };
 
-        // Ensure that the new allocation doesn't exceed `isize::MAX` bytes.
         assert!(
-            new_layout.size() <= isize::MAX as usize,
+            new_layout.size() <= usize::MAX,
             "Allocation too large"
         );
 
@@ -69,7 +52,6 @@ impl<T> RawVec<T> {
             unsafe { alloc::realloc(old_ptr, old_layout, new_layout.size()) }
         };
 
-        // If allocation fails, `new_ptr` will be null, in which case we abort.
         self.ptr = match NonNull::new(new_ptr as *mut T) {
             Some(p) => p,
             None => alloc::handle_alloc_error(new_layout),
@@ -116,7 +98,6 @@ impl<T> MyVec<T> {
             ptr::write(self.ptr().add(self.len), elem);
         }
 
-        // Can't overflow, we'll OOM first.
         self.len += 1;
     }
 
