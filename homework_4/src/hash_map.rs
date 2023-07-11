@@ -8,7 +8,7 @@ struct HashMap<K, V> {
 
 impl<K, V> HashMap<K, V>
 where
-    K: Eq + Hash,
+    K: Eq + Hash +Clone, V: Clone
 {
     fn new() -> Self {
         let initial_capacity = 16;
