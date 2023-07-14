@@ -5,4 +5,16 @@ edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[[bin]]
+name = "vec"
+path = "src/vec.rs"
+
+[[bin]]
+name = "string"
+path = "src/string.rs"
+
+[[bin]]
+name = "map"
+path = "src/map.rs"
+
 [dependencies]
