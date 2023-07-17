@@ -13,4 +13,5 @@ members=[
     "restaurant",
     "chapter8",
     "homework_4",
+    "tokio",
 ]
